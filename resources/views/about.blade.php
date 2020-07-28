@@ -4,6 +4,7 @@
 
 @section('content')
 <h1 id="demo" onmouseover="myFunction()">About Page</h1>
+<p>About Section</p>
 @include('partials.contact_form',['name'=>'Mahmud'])
 @endsection
 
