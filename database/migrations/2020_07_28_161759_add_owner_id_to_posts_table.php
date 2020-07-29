@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MakeUiniqueSlugToPostsTable extends Migration
+class AddOwnerIdToPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class MakeUiniqueSlugToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->unique('slug');
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('people')->onDelete('cascade');
         });
     }
 
@@ -26,7 +27,8 @@ class MakeUiniqueSlugToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropUnique('posts_slug_unique');
+            $table->dropForeign('posts_owner_id_foreign');
+            $table->dropColumn('owner_id');
         });
     }
 }
